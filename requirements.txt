@@ -36,3 +36,5 @@ langchain_huggingface
 sentence_transformers
 
 langchain_experimental
+
+nbconvert

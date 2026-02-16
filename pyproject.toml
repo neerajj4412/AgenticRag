@@ -13,6 +13,7 @@ dependencies = [
     "langchain-core>=0.3.83",
     "langgraph>=0.2.76",
     "langgraph-agents>=0.1.0",
+    "nbconvert>=7.17.0",
     "pymupdf>=1.27.1",
     "wikipedia>=1.4.0",
 ]
