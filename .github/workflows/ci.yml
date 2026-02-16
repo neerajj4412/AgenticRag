@@ -1,36 +1,58 @@
-name: Agentic AI Workspace CI
+name: Agentic RAG CI
 
 on:
   push:
-    branches: ["main"]
   pull_request:
-    branches: ["main"]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        python-version: ["3.11", "3.12", "3.13"]
+        python-version: ["3.11", "3.12"]
 
     steps:
+      # 1️⃣ Checkout code
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      # 2️⃣ Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
+      # 3️⃣ Install uv
       - name: Install uv
         run: pip install uv
 
+      # 4️⃣ Install project dependencies
       - name: Install dependencies
         run: uv pip install --system -r requirements.txt
 
+      # 5️⃣ Sanity check: compile all Python files
       - name: Sanity check (import + syntax)
         run: python -m compileall .
 
+      # 6️⃣ Smoke test for main.py (optional)
       - name: Run app (smoke test)
         run: python main.py || echo "main.py needs env vars"
+
+      # 7️⃣ Run the evaluation notebook
+      - name: Run eval notebook
+        env:
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          jupyter nbconvert \
+            --to notebook \
+            --execute AgenticRAG.ipynb \
+            --ExecutePreprocessor.timeout=600 \
+            --output AgenticRAG.executed.ipynb
+
+      # 8️⃣ Optional: save executed notebook as artifact
+      - name: Upload executed notebook
+        uses: actions/upload-artifact@v3
+        with:
+          name: executed-notebook
+          path: AgenticRAG.executed.ipynb
