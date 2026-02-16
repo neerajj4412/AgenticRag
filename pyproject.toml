@@ -1,0 +1,18 @@
+[project]
+name = "agenticaiworkspace"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "arxiv>=2.4.0",
+    "ipykernel>=7.2.0",
+    "ipynb>=0.5.1",
+    "langchain>=0.3.27",
+    "langchain-community>=0.3.31",
+    "langchain-core>=0.3.83",
+    "langgraph>=0.2.76",
+    "langgraph-agents>=0.1.0",
+    "pymupdf>=1.27.1",
+    "wikipedia>=1.4.0",
+]
