@@ -22,23 +22,22 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      # 3️⃣ Install uv
-      - name: Install uv
-        run: pip install uv
+      # 3️⃣ Install uv and project dependencies
+      - name: Install uv and dependencies
+        run: |
+          pip install uv jupyter ipykernel
+          uv pip install --system -r requirements.txt
 
-      # 4️⃣ Install project dependencies
-      - name: Install dependencies
-        run: uv pip install --system -r requirements.txt
+      # 4️⃣ Ensure python3 kernel exists
+      - name: Install python3 kernel
+        run: |
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
 
       # 5️⃣ Sanity check: compile all Python files
       - name: Sanity check (import + syntax)
         run: python -m compileall .
 
-      # 6️⃣ Smoke test for main.py (optional)
-      - name: Run app (smoke test)
-        run: python main.py || echo "main.py needs env vars"
-
-      # 7️⃣ Run the evaluation notebook
+      # 6️⃣ Run evaluation notebook
       - name: Run eval notebook
         env:
           WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
@@ -48,6 +47,7 @@ jobs:
             --to notebook \
             --execute AgenticRAG.ipynb \
             --ExecutePreprocessor.timeout=600 \
+            --ExecutePreprocessor.kernel_name=python3 \
             --output AgenticRAG.executed.ipynb
 
 
