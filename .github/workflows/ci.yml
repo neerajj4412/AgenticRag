@@ -50,9 +50,4 @@ jobs:
             --ExecutePreprocessor.timeout=600 \
             --output AgenticRAG.executed.ipynb
 
-      # 8️⃣ Optional: save executed notebook as artifact
-      - name: Upload executed notebook
-        uses: actions/upload-artifact@v3
-        with:
-          name: executed-notebook
-          path: AgenticRAG.executed.ipynb
+
