@@ -5,21 +5,11 @@ langchain-community
 
 pymupdf
 
-langchain
-<<<<<<< HEAD
-langgraph
-langchain-core
-langchain-community
 
-pymupdf
-
-langchain
-=======
->>>>>>> a1a3192 (second commit)
 langchain_groq
 faiss_cpu
 tiktoken
-langchain_community
+
 langchain_openai
 chromadb
 sentence_transformers
@@ -33,7 +23,7 @@ docx2txt
 ##embeddings
 
 langchain_huggingface
-sentence_transformers
+
 
 langchain_experimental
 
